@@ -8,7 +8,7 @@ private:
 public:
 	
 	EventMatrix();
-	EventMatrix(LoadData);
+	EventMatrix(LoadData&);
 
 	void matrix2txt();
 	~EventMatrix();

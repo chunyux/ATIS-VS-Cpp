@@ -10,7 +10,7 @@ EventMatrix::EventMatrix()
 	}
 }
 
-EventMatrix::EventMatrix(LoadData dataLoader)
+EventMatrix::EventMatrix(LoadData& dataLoader)
 {
 	for (int i = 0; i < HEIGHT; i++){
 		for (int j = 0; j < WIDTH; j++){
@@ -23,6 +23,7 @@ EventMatrix::EventMatrix(LoadData dataLoader)
 	for (iterEvent = dataLoader.events.begin(); iterEvent < dataLoader.events.end(); iterEvent++){
 		m[iterEvent->x_coordinate][iterEvent->y_coordinate] = iterEvent->polarity;
 	}
+
 }
 
 
@@ -39,7 +40,7 @@ void EventMatrix::matrix2txt()
 	errno_t err;
 
 	// Open for write 
-	if ((err = fopen_s(&fptr, "C:\\Users\\Chunyu\\Documents\\visual studio 2013\\Projects\\atis\\atis\\mOutput.txt", "w")) != 0)
+	if ((err = fopen_s(&fptr, "C:\\Users\\Chunyu\\Documents\\visual studio 2013\\Projects\\atis\\atis\\mOutput.txt", "a")) != 0)
 		printf("The file 'data2' was not opened\n");
 	else{
 		printf("The file 'data2' was opened\n");

@@ -1,16 +1,24 @@
 #include "LoadData.h"
 
-void LoadData::load(const char* fileName){
+LoadData::LoadData(const char* fileName):
+file_name(fileName), t0_stamp(0)
+{
 	ifstream dataFile(fileName);
-	int p, x, y, t;
+	assert(dataFile);
+	dataFile.seekg(0, ios::beg);
+	sp_beg = dataFile.tellg();
+
+}
+
+void LoadData::load(streampos sp){
 	
-	if (!dataFile){
-		cout << "Unable to open " << endl;
-		exit(1);
-	}
+	int p, x, y, t = this->t0_stamp;
+
+	ifstream dataFile(this->file_name);
+	assert(dataFile);
 	
-	
-	while (!dataFile.eof()){
+	dataFile.seekg(sp);
+	while (!dataFile.eof()&&(t-this->t0_stamp)<SAMPLE_TIME){
 		
 		dataFile >> dec >> p;
 		dataFile >> dec >> x;
@@ -19,7 +27,8 @@ void LoadData::load(const char* fileName){
 		SingleEvent event(p,x,y,t);
 		this->events.push_back(event);
 	}
-
+	this->t0_stamp = t;
+	this->sp_beg = dataFile.tellg();
 	dataFile.close();
 
 };
