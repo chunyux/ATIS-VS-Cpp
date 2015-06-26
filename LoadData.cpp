@@ -1,34 +1,37 @@
-#include "LoadData.h"
+#include "stdafx.h"
 
-LoadData::LoadData(const char* fileName):
-file_name(fileName), t0_stamp(0)
+DataList::DataList(const char* fileName):
+file_name(fileName), t0_stamp(0),anEvent(-1,-1,-1,-1)
 {
 	ifstream dataFile(fileName);
 	assert(dataFile);
 	dataFile.seekg(0, ios::beg);
+	
 	sp_beg = dataFile.tellg();
-
+	
 }
 
-void LoadData::load(streampos sp){
+void DataList::load(){
 	
-	int p, x, y, t = this->t0_stamp;
+	int n_event = 0;
 
 	ifstream dataFile(this->file_name);
 	assert(dataFile);
 	
-	dataFile.seekg(sp);
-	while (!dataFile.eof()&&(t-this->t0_stamp)<SAMPLE_TIME){
+	dataFile.seekg(sp_beg);	
+	//while (!dataFile.eof()&&(t-this->t0_stamp)<SAMPLE_TIME){
+	while (!dataFile.eof()){
+		// save one event from txt to anEvent object
+		dataFile >> dec >> this->anEvent.polarity;
+		dataFile >> dec >> this->anEvent.x_coordinate;
+		dataFile >> dec >> this->anEvent.y_coordinate;
+		dataFile >> dec >> this->anEvent.t_stamp;
 		
-		dataFile >> dec >> p;
-		dataFile >> dec >> x;
-		dataFile >> dec >> y;
-		dataFile >> dec >> t;
-		SingleEvent event(p,x,y,t);
-		this->events.push_back(event);
+		this->eventList.insert(anEvent);
 	}
-	this->t0_stamp = t;
-	this->sp_beg = dataFile.tellg();
+	//this->t0_stamp = t;
+	//pos_type = 1;
+	//this->sp_beg = dataFile.tellg();
 	dataFile.close();
 
 };
