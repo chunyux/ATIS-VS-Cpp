@@ -1,30 +1,43 @@
-#include <iostream>
-#include <vector>
-#include "champMarkov.h"
-#include "EventMatrix.h"
+//#include <iostream>
+#include "stdafx.h"
+#include <deque>
+//#include "champMarkov.h"
+//#include "EventMatrix.h"
 //#include <opencv2\opencv.hpp>
 
 using namespace std;
 //using namespace cv;
 
+const int bufferLength = 2000;
+const int updateLength = 1000;
 
 int main(){
-	LoadData dataLoader("C:\\Users\\Chunyu\\Documents\\Visual Studio 2013\\Projects\\atis\\atis\\eventTest.txt");
+	DataList dataLoader("C://Users//xiang//Documents//Visual Studio 2008//Projects//helloWorld//helloWorld//eventRecord_28_04_15_18_10_08.txt");
+	dataLoader.load(); //no parameter **interface designe [CHECKED]
+	deque <SingleEvent> EventBuffer;
+	list <SingleEvent>::iterator iterEventList;
+
+	for(int ibufferLength = 0,iterEventList = dataLoader.eventList.begin(); ibufferLength <bufferLength ;ibufferLength ++,iterEventList++){
+			EventBuffer.push_back(*iterEventList);
+	}
 
 	while (1){
-		dataLoader.load(dataLoader.sp_beg);
 
-		EventMatrix* eventMatrixp = new EventMatrix(dataLoader);
-		/*
-		string imagename = "C:\\Users\\Chunyu\\Documents\\visual studio 2013\\Projects\\atis\\atis\\test.jpg";
-		Mat img = imread(imagename);
-	
-		namedWindow("image", 1);
-		imshow("image", img);
-		*/
-		eventMatrixp->matrix2txt();
-		dataLoader.events.swap(vector<SingleEvent>());
-		delete eventMatrixp;
+		//push back 2000
+		for(int iupdateLength = 0; iupdateLength < updateLength ;iupdateLength++,iterEventList++){
+			EventBuffer.push_back(*iterEventList);
+		}
+
+		EventMatrix* pEventMatrix = new EventMatrix(dataLoader);
+		
+
+		pEventMatrix->matrix2txt();
+
+		//pop_front 1000 events
+		for(int iupdateLength = 0; iupdateLength < updateLength; iupdateLength ++){
+			EventBuffer.pop_front();
+		}
+		delete pEventMatrix;
 
 	}
 	return 1;
