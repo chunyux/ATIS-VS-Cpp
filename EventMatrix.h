@@ -1,5 +1,5 @@
 #pragma once
-#include "LoadData.h"
+#include "DataList.h"
 
 class EventMatrix
 {
@@ -8,11 +8,12 @@ private:
 public:
 	
 	EventMatrix();
-	EventMatrix(LoadData&);
+	EventMatrix(SingleEvent*);
 
 	void matrix2txt();
 	~EventMatrix();
 
-	
 };
+
+
 
