@@ -4,8 +4,11 @@ class SingleEvent
 private:
 	
 public:
-	int polarity, x_coordinate, y_coordinate, t_stamp;
-	SingleEvent(int, int, int, int);
+	short polarity, x_coordinate, y_coordinate;
+	int t_stamp;
+	SingleEvent(short, short, short, int); // int to short ?? for p, x,y
+	// copy constructer
 	~SingleEvent();
 };
+
 
