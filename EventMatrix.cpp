@@ -1,4 +1,4 @@
-#include "EventMatrix.h"
+#include "stdafx.h"
 
 
 EventMatrix::EventMatrix()
@@ -10,7 +10,7 @@ EventMatrix::EventMatrix()
 	}
 }
 
-EventMatrix::EventMatrix(LoadData& dataLoader)
+EventMatrix::EventMatrix(deque <SingleEvent>& eventBuffer)
 {
 	for (int i = 0; i < HEIGHT; i++){
 		for (int j = 0; j < WIDTH; j++){
@@ -18,21 +18,18 @@ EventMatrix::EventMatrix(LoadData& dataLoader)
 		}
 	}
 
-	vector<SingleEvent>::iterator iterEvent;
+	deque <SingleEvent>::iterator iterEvent;
 
-	for (iterEvent = dataLoader.events.begin(); iterEvent < dataLoader.events.end(); iterEvent++){
-		m[iterEvent->x_coordinate][iterEvent->y_coordinate] = iterEvent->polarity;
+	for (iterEvent = eventBuffer.begin(); iterEvent < eventBuffer.end(); iterEvent++){
+		m[(*iterEvent).x_coordinate][(*iterEvent).y_coordinate] = (*iterEvent).polarity;
 	}
 
 }
 
 
-
-
 EventMatrix::~EventMatrix()
 {
 }
-
 
 void EventMatrix::matrix2txt()
 {
@@ -40,7 +37,7 @@ void EventMatrix::matrix2txt()
 	errno_t err;
 
 	// Open for write 
-	if ((err = fopen_s(&fptr, "C:\\Users\\Chunyu\\Documents\\visual studio 2013\\Projects\\atis\\atis\\mOutput.txt", "a")) != 0)
+	if ((err = fopen_s(&fptr, "C://Users//xiang//Documents//Visual Studio 2008//Projects//helloWorld//helloWorld//Output.txt", "a")) != 0)
 		printf("The file 'data2' was not opened\n");
 	else{
 		printf("The file 'data2' was opened\n");
