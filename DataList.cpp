@@ -1,11 +1,13 @@
+//	@Created by Chunyu XIANG 03/2015	
+
 #include "stdafx.h"
 
 DataList::DataList(const char* fileName):
-file_name(fileName), t0_stamp(0),anEvent(-1,-1,-1,-1)
+file_name(fileName), anEvent(-1,-1,-1,-1)
 {
 	ifstream dataFile(fileName);
 	assert(dataFile);
-	dataFile.seekg(0, ios::beg);
+	dataFile.seekg(0, ios::beg); // find the beginning of txt file
 	
 	sp_beg = dataFile.tellg();
 	
@@ -27,12 +29,12 @@ void DataList::load(){
 		dataFile >> dec >> this->anEvent.y_coordinate;
 		dataFile >> dec >> this->anEvent.t_stamp;
 		
-		this->eventList.insert(anEvent);
+		this->eventList.push_back(anEvent);
 	}
-	//this->t0_stamp = t;
-	//pos_type = 1;
-	//this->sp_beg = dataFile.tellg();
+
 	dataFile.close();
 
 };
+
+
 
