@@ -1,3 +1,7 @@
+//	DataList.h save the events in a list of events from txt
+//				
+//	@Created by Chunyu XIANG 03/2015		
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -8,22 +12,22 @@
 using namespace std;
 #define WIDTH 304
 #define HEIGHT 240
-#define SAMPLE_TIME 20
+//#define SAMPLE_TIME 20
 
-class DataList //动词开头一般是function 此处应该是名词
+class DataList 
 {
-public:
+private:
 	streampos sp_beg;
 	const char* file_name;
-	int t0_stamp;
+//	int t0_stamp;
 	
 	SingleEvent anEvent;
-	list <SingleEvent> eventList;
 	
+public:
+	list <SingleEvent> eventList;
+	DataList(const char*);
 	void load();
 	
-
-	DataList(const char*);
 };
 
 
