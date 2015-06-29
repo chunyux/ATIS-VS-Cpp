@@ -1,5 +1,6 @@
-#include "stdafx.h"
+//	@Created by Chunyu XIANG 03/2015
 
+#include "stdafx.h"
 
 EventMatrix::EventMatrix()
 {
@@ -10,18 +11,13 @@ EventMatrix::EventMatrix()
 	}
 }
 
-EventMatrix::EventMatrix(deque <SingleEvent>& eventBuffer)
+void EventMatrix::buffer2matrix(AtisEventBuffer& eventBuffer)
 {
-	for (int i = 0; i < HEIGHT; i++){
-		for (int j = 0; j < WIDTH; j++){
-			m[i][j] = 0;
-		}
-	}
 
 	deque <SingleEvent>::iterator iterEvent;
 
-	for (iterEvent = eventBuffer.begin(); iterEvent < eventBuffer.end(); iterEvent++){
-		m[(*iterEvent).x_coordinate][(*iterEvent).y_coordinate] = (*iterEvent).polarity;
+	for (iterEvent = eventBuffer.readBuffer().begin(); iterEvent < eventBuffer.readBuffer().end(); iterEvent++){
+		m[(*iterEvent).x_coordinate][(*iterEvent).y_coordinate] = (((*iterEvent).polarity==1)? 1:-1);
 	}
 
 }
@@ -61,3 +57,13 @@ void EventMatrix::matrix2txt()
 	 _fcloseall();
 
 }
+
+void EventMatrix::clearMatrix()
+{
+	for (int i = 0; i < HEIGHT; i++){
+		for (int j = 0; j < WIDTH; j++){
+			m[i][j] = 0;
+		}
+	}
+}
+
